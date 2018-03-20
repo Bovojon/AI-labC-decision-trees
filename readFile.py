@@ -24,9 +24,10 @@ def plurality_value(attribute, attr_dict):
         else:
             value_dict[value] = 1
     plurality = max(value_dict,key=value_dict.get)
-    print(plurality)
+    return plurality
 
 
 if __name__ == '__main__':
     attr_dict = readFile()
-    plurality_value("size", attr_dict)
+    plurality = plurality_value("size", attr_dict)
+    
