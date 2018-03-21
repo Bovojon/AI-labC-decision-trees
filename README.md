@@ -1,11 +1,9 @@
-# AI-labC-decision-trees
+# LabC decision-tree-learning algorithm
 
-* References
-
-https://stackoverflow.com/questions/4796764/read-file-from-line-2-or-skip-header-row
-
-http://aima.cs.berkeley.edu/python/learning.html
-
-https://stackoverflow.com/questions/16989647/importing-large-tab-delimited-txt-file-into-python
-
-https://www.quora.com/How-do-I-find-the-most-repeated-integer-in-a-list-in-python
+* The datasets are in the `Data` folder.
+* The main code for the program is in the `DecisionTree` folder.
+* To run the `decision-tree-learning` algorithm on the datasets, run `main.py` passing in the path to the dataset file as an argument. For example:
+```
+python main.py Data/pets.txt
+```
+* That will output the constructed decision tree.
