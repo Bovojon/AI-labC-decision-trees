@@ -1,4 +1,5 @@
 import math, copy
+import random
 
 class Node:
     def __init__(self, root):
@@ -8,6 +9,7 @@ class Node:
     def addChild(self, child):
         self.children.append(child)
 
+
 def PlurarityValue(examples):
     classifications = {}
     for example in examples:
@@ -15,7 +17,13 @@ def PlurarityValue(examples):
             classifications[example.classification] += 1
         else:
             classifications[example.classification] = 1
-    return max(classifications,key=classifications.get)
+    maxCount = max(classifications.values())
+    maxes = []
+    for i in classifications.keys():
+        if classifications[i] == maxCount:
+            maxes.append(i)
+    return maxes[random.randint(0, len(maxes)-1)]
+
 
 def EntropyValue(examples):
     # Assuming only classifications
@@ -33,6 +41,7 @@ def EntropyValue(examples):
     entropyValue = -(positive/total * math.log2(positive/total)) - (negative/total * math.log2(negative/total))
     return entropyValue
 
+
 def ImportanceScore(attribute, possibleValues, examples):
     splitedValues = {}
     importanceScore = 0
@@ -46,6 +55,7 @@ def ImportanceScore(attribute, possibleValues, examples):
     for value in splitedValues:
         importanceScore += EntropyValue(splitedValues[value]) * len(splitedValues[value])/len(examples)
     return importanceScore
+
 
 def DecisionTreeLearning(examples, attributes, parent_examples, valueDict):
     if len(examples) == 0:
@@ -73,6 +83,7 @@ def DecisionTreeLearning(examples, attributes, parent_examples, valueDict):
             tree.addChild((value, DecisionTreeLearning(newExamples, newAttribute, examples, valueDict)))
         return tree
 
+
 def printTree(node, level):
     for child in node.children:
         if level > 0:
@@ -85,3 +96,15 @@ def printTree(node, level):
         else:
             print(node.root, "=", child[0])
             printTree(child[1], level + 1)
+
+
+def testResult(node, canon):
+    for child in node.children:
+        if type(child[1]) == bool:
+            if child[1] == canon.classification:
+                return True
+            else:
+                return False
+        else:
+            if child[0] == canon.attributes[node.root]:
+                return testResult(child[1], canon)

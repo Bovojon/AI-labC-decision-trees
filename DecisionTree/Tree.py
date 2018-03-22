@@ -46,3 +46,17 @@ class DecisionTree:
 
     def display(self):
         printTree(self.tree, 0)
+
+    def accuracyTest(self):
+        total = 0
+        positive = 0
+        for i in range(len(self.examples)):
+            total += 1
+            exampleSet = copy.deepcopy(self.examples)
+            crossValidateExample = exampleSet[i]
+            del exampleSet[i]
+            decisionTree = DecisionTreeLearning(exampleSet, self.attributesNames, exampleSet, self.valueDict)
+            if testResult(decisionTree, crossValidateExample):
+                positive += 1
+        return positive/total * 100
+
